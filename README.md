@@ -1,9 +1,8 @@
-This repository stores my notes about recent advancements in Difference-in-Difference methods.
+This repository stores my notes and some useful resources about recent advancements in Difference-in-Difference methods.
 
-The intuition and Stata implementation is of the most importance for applied economists, on which I will focus in the note.
 
 Useful references:
-1. Review papers:
-   - Roth, Jonathan, Pedro H.C. Sant’Anna, Alyssa Bilinski, and John Poe (2023) “What’s Trending in Difference-in-Differences? A Synthesis of the Recent Econometrics Literature,” Journal of Econometrics, 235 (2), 2218–2244, 10.1016/j.jeconom.2023.03.008.
-   - de Chaisemartin, Clément and Xavier D’Haultfœuille (2023) “Two-Way Fixed Effects and Differences-in-Differences with Heterogeneous Treatment Effects: A Survey,” The Econometrics Journal, 26 (3), C1–C30, 10.1093/ectj/utac017.
+1. The Population and Dynamics and Health Program (PDHP) at the University of Michigan holds a series of workshops introducing recent advances in Difference-in-Differences Method. The corresponding YouTube list is [here](https://www.youtube.com/playlist?list=PLIfQuCb6XdT9TmJOkmP7wG5JG8cVUdLt1).
+2. Mixtape also have great resources on causal inference methods ([here](https://github.com/Mixtape-Sessions/)). In particular, two sessions are relevant: [Advanced DID](https://github.com/Mixtape-Sessions/Advanced-DID/) and [Frontiers in DID](https://github.com/Mixtape-Sessions/Frontiers-in-DID/).
+3. The review paper [What's Trending in Differences-in-Differences? A Synthesis of the Recent Econometrics Literature](https://www.sciencedirect.com/science/article/abs/pii/S0304407623001318) is extremely important.
    
