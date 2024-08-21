@@ -1,0 +1,294 @@
+\documentclass[12pt]{article}
+
+\newcommand{\CiteMathPackage}{math}
+\newcommand{\CiteReference}{reference.bib}
+
+% Packages
+\usepackage{setspace,geometry,fancyvrb,rotating}
+\usepackage{marginnote,datetime,enumitem}
+\usepackage{titlesec,indentfirst}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}
+\usepackage{threeparttable,booktabs,adjustbox}
+\usepackage{graphicx,epstopdf,float,soul,subfig}
+\usepackage[toc,page]{appendix}
+\usdate
+
+% Page Setup
+\geometry{scale=0.8}
+\titleformat{\paragraph}[runin]{\itshape}{}{}{}[.]
+\titlelabel{\thetitle.\;}
+\setlength{\parindent}{10pt}
+\setlength{\parskip}{10pt}
+\usepackage{Alegreya}
+\usepackage[T1]{fontenc}
+
+%% Bibliography
+\usepackage{natbib,fancybox,url,xcolor}
+\definecolor{MyBlue}{rgb}{0,0.2,0.6}
+\definecolor{MyRed}{rgb}{0.4,0,0.1}
+\definecolor{MyGreen}{rgb}{0,0.4,0}
+\definecolor{MyPink}{HTML}{E50379}
+\newcommand{\highlightR}[1]{{\emph{\color{MyRed}{#1}}}} 
+\newcommand{\highlightB}[1]{{\emph{\color{MyBlue}{#1}}}}
+\newcommand{\highlightP}[1]{{\emph{\color{MyPink}{#1}}}}
+\usepackage[bookmarks=true,bookmarksnumbered=true,colorlinks=true,linkcolor=MyBlue,citecolor=MyRed,filecolor=MyBlue,urlcolor=MyGreen]{hyperref}
+\bibliographystyle{econ}
+
+%% Theorem Environment
+\theoremstyle{definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{corollary}[theorem]{Corollary}
+\usepackage{mathtools}
+\usepackage{\CiteMathPackage}
+\renewcommand{\theequation}{\arabic{section}.\arabic{subsection}.\arabic{equation}} 
+
+\begin{document}
+
+%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??
+%?? title
+%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??
+
+\title{\bf Recent Advances in Difference-in-Differences}
+\author{Wenzhi Wang \thanks{This note is written in my pre-doc period at the University of Chicago Booth School of Business.} } 
+\date{\today}
+\maketitle
+
+
+%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??
+%?? section 1. Introduction
+%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??
+
+
+\section{Introduction and Learning Resources}
+
+\citet{rothWhatTrendingDifferenceinDifferences2023} 
+
+\citet{dechaisemartinTwoWayFixedEffects2023}
+
+
+%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??
+%?? section 2. The Canonical DiD Setup
+%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??
+
+
+\section{The Canonical DiD Setup}
+
+%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?
+%-? subsection Treatment Assignment and Timing
+%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?
+
+\subsection{Treatment Assignment and Timing}
+
+\begin{itemize}[topsep=0pt, leftmargin=20pt, itemsep=0pt]
+\setlength{\parskip}{10pt} 
+\item There are two time periods, $t = 1, 2$.
+\item Units indexed by $i$ are drawn from one of two groups.
+\begin{itemize}[topsep=0pt, leftmargin=26pt, itemsep=0pt]
+	\setlength{\parskip}{10pt} 
+	\item Units from the treated population receive a treatment of interest in period $t=2$, denoted by $G_i = 2$. 
+	\item Units from the untreated (a.k.a. comparison or control) population remain untreated in both time periods, denoted by $G_i = \infty$.
+	\item In this notation, $G$ refers to the treatment time.
+	\item The econometrician observes an outcome $Y_{i,t}$ and treatment status $G_i$ for a panel of units, $i = 1, \ldots, N$ and $t = 1, 2$. \footnote{Although DiD methods also accommodate the case where only repeated cross-sectional data is available, or where the panel is unbalanced, we focus on the simpler setup with balanced panel data for ease of exposition. }
+\end{itemize}
+\end{itemize}
+
+
+%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?
+%-? subsection Potential Outcomes and Target Parameter
+%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?
+
+\subsection{Potential Outcomes and Target Parameter}
+
+Let $Y_{i,t}\of{g}$ denote unit $i$'s potential outcome in period $t$ if unit $i$ was exposed to treatment for the first time in period $g$. \footnote{Compared with the standard textbook notation, this seemingly weird notation actually has more advantages. This point will be clear in the next Section when the staggered adoption designs are discussed.}
+
+\begin{itemize}[topsep=0pt, leftmargin=20pt, itemsep=0pt]
+\setlength{\parskip}{10pt} 
+\item $Y_{i, 1}\of{2}$ denotes unit $i$'s (who is first treated in period $t=2$) potential outcome in period $t=1$. 
+\item $Y_{i, 2}\of{\infty}$ denotes unit $i$'s (who is never treated in both periods) potential outcome in period $t=2$. 
+\item This notation implicitly encodes the stable unit treatment value assumption (SUTVA) that unit $i$'s outcomes do not depend on the treatment status of unit $j \neq i$, which rules out spillover and general equilibrium effects. 
+\end{itemize}
+
+
+The observed outcome is given by 
+$$
+Y_{i,t} = \sum_{g \in \Gc} \ind{G_i = g} Y_{i,t}\of{g}, 
+$$
+where $\Gc$ is the set containing all treatment periods, and in the canonical $2 \times 2$ setting, $\Gc = \bc{2, \infty}$. 
+
+The causal estimand of primary interest in the canonical DiD setup is the average treatment effect on the treated (ATT) in period $t = 2$,
+\begin{equation}
+    \label{ATT_in_basic_model}
+    \operatorname*{ATT} = \underbrace{\E\bs{Y_{i,2}\of{2} \mid G_i = 2}}_{\text{estimable from the data}} - \underbrace{\E\bs{Y_{i,2}\of{\infty} \mid G_i = 2}}_{\text{\highlightP{counterfactual component}}}.
+\end{equation}
+It simply measures the average causal effect on treated units in the period that they are treated ($t = 2$).
+
+%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?
+%-? subsection The Parallel Trends Assumption and Identification
+%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?
+
+\subsection{Identification Under Two Assumptions}
+
+\begin{assumption}[Parallel Trends] \label{PT_in_basic_model}
+    \begin{equation}
+        \label{parallel_trends_in_basic_model}
+        \E\bs{Y_{i,2}\of{\infty} - Y_{i,1}\of{\infty} \mid G_i = 2} = \E\bs{Y_{i,2}\of{\infty} - Y_{i,1}\of{\infty} \mid G_i = \infty}.
+    \end{equation}
+\end{assumption}
+
+Assumption \ref{PT_in_basic_model} states that the average outcome for the treated and untreated populations would have evolved in parallel if treatment has not occurred. It can be rationalized by imposing a particular generative model for the untreated potential outcomes:
+$$
+Y_{i,t}\of{\infty} = \a_i + \phi_t + \ve_{i,t},
+$$
+where $\ve_{i,t}$ is mean-independent of $G_i$. \footnote{Note that this parametric model about untreated counterfactual outcomes allows treatment to be assigned non-randomly based on characteristics that affect the level of the outcome ($\a_i$), but requires the treatment assignment to be mean-independent of variables that affect the \highlightP{trend} in the outcome ($\ve_{i,t}$). In other words, parallel trends allows for the presence of selection bias, but the bias from selecting into treatment must be the same in period $t = 1$ as it is in period $t = 2$.}
+
+Another important assumption required for identification of $\operatorname*{ATT}$ is the no-anticipation assumption, which states that the treatment has no causal effect prior to its implementation. 
+
+\begin{assumption}[No Anticipation Effects]  \label{NA_in_basic_model}
+    \begin{equation}
+        \label{eq_na_in_basic_model}
+        Y_{i,1}\of{2} = Y_{i,1}\of{\infty}\quad \text{for all $i$ with $G_i = 2$}.
+    \end{equation}
+\end{assumption}
+
+\begin{itemize}[topsep=0pt, leftmargin=20pt, itemsep=0pt]
+	\setlength{\parskip}{10pt} 
+	\item Assumption \ref{NA_in_basic_model} says that for these treated units, in the pre-treatment units, the potential outcomes given that they are treated or untreated are the same. 
+	\item That is, in pre-treatment units, units cannot act differently based on whether they are going to be treated in the future.
+	\item Assumption \ref{NA_in_basic_model} is important for identification of $\operatorname*{ATT}$, since otherwise the changes in the outcome for the treatment between period $1$ and $2$ could reflect not just the causal effect in period $t = 2$ but also the anticipatory effect in period $t = 1$.
+\end{itemize}
+
+
+
+To show why $\operatorname*{ATT}$ is identified, first re-arrange terms in equation (\ref{parallel_trends_in_basic_model}), 
+\begin{equation}
+    \notag 
+    \mathbb{E}\left[Y_{i, 2}(\infty) \mid G_i = 2\right]=\mathbb{E}\left[Y_{i, 1}(\infty) \mid G_i = 2\right]+\mathbb{E}\left[Y_{i, 2}(\infty)-Y_{i, 1}(\infty) \mid G_i = \infty\right] .
+\end{equation}
+Second, by the no anticipatory assumption, $\mathbb{E}\left[Y_{i, 1}(\infty) \mid G_i = 2\right] = \mathbb{E}\left[Y_{i, 1}(2) \mid G_i = 2\right]$. It follows that 
+$$
+\begin{aligned}
+\mathbb{E}\left[Y_{i, 2}(0) \mid G_i = 2\right] & =\mathbb{E}\left[Y_{i, 1}(2) \mid G_i = 2\right]+ \mathbb{E}\left[Y_{i, 2}(\infty)-Y_{i, 1}(\infty) \mid G_i = \infty\right] \\
+& =\mathbb{E}\left[Y_{i, 1} \mid G_i = 2\right]+\mathbb{E}\left[Y_{i, 2}-Y_{i, 1} \mid G_i = \infty\right],
+\end{aligned}
+$$
+where the second equality uses the fact that we observe $Y_{i, 1}\of{2}$ for treated units and $Y_{i, t}\of{\infty}, t = 1, 2$ for untreated units. 
+
+Therefore, $\operatorname*{ATT}$ can be identified as 
+\begin{equation}
+    \label{DiD_in_basic_model}
+    \operatorname*{ATT} = \underbrace{\mathbb{E}\left[Y_{i, 2}-Y_{i, 1} \mid {\color{MyPink} G_i = 2}\right]}_{\text {Changes in the treated group}}-\underbrace{\mathbb{E}\left[Y_{i, 2}-Y_{i, 1} \mid {\color{MyPink} G_i = \infty}\right]}_{\text {Changes for in the control group}},
+\end{equation}
+i.e., the ``difference-in-differences'' of population means.
+
+%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?
+%-? subsection Estimation and Inference
+%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?%-?
+
+\subsection{Estimation and Inference}
+
+Equation (\ref{DiD_in_basic_model}) gives an expression for $\operatorname*{ATT}$ in terms of a ``difference-in-differences'' of population expectations. Therefore, a natural way to estimate $\operatorname*{ATT}$ is to replace expectations with their sample analogs, 
+\begin{equation}
+    \widehat{\operatorname*{ATT}}=\left(\ol{Y}_{t=2, G=2}-\ol{Y}_{t=1, G=2}\right)-\left(\ol{Y}_{t=2, G=\infty}-\ol{Y}_{t=1, G=\infty}\right),
+\end{equation}
+where $\ol{Y}_{t=t^\prime, G=g}$ is the sample mean of $Y$ for group $g$ in period $t^{\prime}$.
+
+A popular way of computing $\widehat{\operatorname*{ATT}}$, which facilitates the computation of standard errors, is to use the two-way fixed effects (TWFE) regression specification
+\begin{equation}
+    \label{TWFE_in_basic_model}
+    Y_{i,t} = \a_i + \phi_t + \bs{\ind{t=2} \cdot \ind{G_i = 2}} \b + \ve_{i,t},
+\end{equation}
+In this canonical DiD setup, it is straightforward to show that the ordinary least squares (OLS) coefficient $\wh{\b}$ is equivalent to $\widehat{\operatorname*{ATT}}$.
+
+With a balanced panel, the OLS coefficient on $\b$ is also numerically identical to the following regression:
+% the coefficient from a regression that replaces the fixed effects with a constant, a treatment indicator, a second-period indicator, and the treatment $\times$ second-period interaction, 
+\begin{equation}
+    \label{common_regression_in_basic_model}
+    Y_{i,t} = \a + \ind{G_i = 2} \t + \ind{t=2} \xi + \bs{\ind{t=2} \cdot \ind{G_i = 2}} \b + \ve_{i,t}.
+\end{equation}
+This regression can be generalized to repeated cross-sectional data.
+
+\begin{assumption}[Independent Sampling] \label{sampling_in_basic_model}
+    Let $W_i = \bp{Y_{i,2}, Y_{i,1}, G_i}^{\prime}$ denote the vector of outcomes and treatment status for unit $i$ We observe a sample of $N$ i.i.d. draws $W_i \sim F$ for some distribution $F$ satisfying parallel trends.
+\end{assumption}
+
+Under Assumptions \ref{PT_in_basic_model} - \ref{sampling_in_basic_model} and mild regularity conditions, 
+\begin{equation}
+    \notag 
+    \sqrt{n}\left(\widehat{\beta}-\operatorname*{ATT}\right) \rightarrow_d \mathcal{N}\left(0, \sigma^2\right)
+\end{equation}
+in the asymptotic as $N \rightarrow \infty$ and $T$ is fixed. \footnote{The variance $\sigma^2$ is consistently estimable using standard clustering methods that allow for arbitrary correlation at the unit level. For example, we can easily extend the independent sampling case (Assumption \ref{sampling_in_basic_model}) to cases where the observations are individual units who are members of independently-sampled clusters (e.g. states), and the standard errors are clustered at the appropriate level, provided that the number of treated and untreated clusters both grow large.}
+
+
+\setcounter{equation}{0}
+%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??
+%?? section 3. Staggered Adoption Designs
+%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??
+
+\section{Staggered Adoption Designs}
+
+\subsection{Notations and Traditional Approaches}
+
+I will talk about \highlightB{staggered adoption designs} here -- cases in which being treated is an absorbing state: once a unit adopts the binary treatment, it remains exposed to the treatment for all periods afterwards.
+
+Notations:
+\begin{itemize}[topsep=0pt, leftmargin=20pt, itemsep=0pt]
+	\setlength{\parskip}{10pt} 
+	\item There are in total $T$ observable periods: $t \in \Tc \coloneqq \bc{1, 2, \ldots, T}$.
+	\item For each unit $i$, his first treatment date is denoted by $G_i \in \Gc \coloneqq \Tc \bigcup \bc{\infty}$, where $G_i = \infty$ refers to a ``never-treated'' unit.
+	\item $K_{it} = t - G_i$ is the relative time index to the treatment date. 
+	\item $D_{it} = \ind{K_{it} \geq 0}$ is a dummy indexing if the unit $i$ is exposed to treatment in period $t$.
+	\item For $g \in \Gc$, all units with $G_i = g$ are referred to as a \highlightB{cohort}, or a \highlightB{timing group}, denoted by $g$, with a little abuse of notations.
+\end{itemize}
+
+In practice, two regressions are particularly popular, which are often referred to as \highlightB{Two-Way Fixed Effects (TWFE)} regressions: 
+\begin{equation}
+    \label{2}
+    Y_{i t} = \wt{\alpha}_i + \wt{\l}_t + \sum_{\substack{h=-a \\ h \neq-1}}^{b-1} \tau_h \ind{K_{i t}=h} + \tau_{b+} \ind{K_{i t} \geq b} + \tau_{a-} \ind{K_{i t} < a}  + \varepsilon_{i t}
+\end{equation}
+I will further refer to this regression model as a ``dynamic'' TWFE regression equation. \footnote{Here, $\wt{\alpha}_i, \wt{\l}_t$ are the unit and period fixed effects, $a \geq 0$ and $b \geq 0$ are the numbers of included ``\highlightB{leads}'' and ``\highlightB{lags}'' of the event indicator, respectively, and $\ve_{it}$ is the error term. The first lead, $\ind{K_{it} = -1}$, is often excluded as a normalization, while the coefficients on the other leads (if present) are interpreted as measures of ``pre-trends'', and the hypothesis that $\tau_{a-} = \tau_{-1} = \ldots \tau_{-2} = 0$ is tested visually or statistically. Conditionally on this test passing, the coefficients on the lags are interpreted as a dynamic path of causal effects: at $h=0, \ldots, b-1$ periods after treatment and, in the case of $\tau_{b+}$, at longer horizons binned together. }
+
+With $a=b=0$, there is a ``\highlightB{static}'' TWFE regression:
+\begin{equation}
+    \label{3}
+    Y_{i t} = \wt{\alpha}_i + \wt{\l}_t + \b^{DD} D_{i t} + \varepsilon_{i t} .
+\end{equation}
+
+Next, I will summarize how recent econometrics papers link the TWFE estimators to the causal estimand in the canonical $2 \times 2$ case. I will start with \citet{goodman-baconDifferenceinDifferencesVariationTreatment2021}, which provide a set of algebraic decomposition results under minimal assumptions in Section \ref{subsec_general_decomposition}. In Section \ref{subsec_other_decomposition}, I will summarize results in \citet{borusyakRevisitingEventStudyDesigns2024,atheyDesignBasedAnalysisDifferenceinDifferences2022a,dechaisemartinTwoWayFixedEffects2020}, which link TWFE estimators ${\b}^{DD}$ and $\bc{\tau_{h}}$ to some reasonable causal estimands, under different assumptions.
+
+Finally, I will talk about alternative estimators with better causal interpretation than the TWFE specifications, proposed by \citet{borusyakRevisitingEventStudyDesigns2024, callawayDifferenceinDifferencesMultipleTime2021, sunEstimatingDynamicTreatment2021}.
+
+\subsection{Interpreting $\wh{\b}^{DD}$ I: Genearl Decomposition from \citet{goodman-baconDifferenceinDifferencesVariationTreatment2021}} \label{subsec_general_decomposition}
+
+\highlightP{TO BE SUMMARIZED FROM THE PAPER NOTES}
+
+\subsection{Interpreting $\wh{\b}^{DD}$ II: Other Decomposition Results} \label{subsec_other_decomposition}
+
+\highlightP{TO BE SUMMARIZED FROM THE PAPER NOTES}
+
+\subsection{Alternative Estimators I: \citet{borusyakRevisitingEventStudyDesigns2024}}
+
+\highlightP{TO BE SUMMARIZED FROM THE PAPER NOTES}
+
+\subsection{Alternative Estimators II: \citet{callawayDifferenceinDifferencesMultipleTime2021}}
+
+\highlightP{TO BE SUMMARIZED FROM THE PAPER NOTES}
+
+\subsection{Alternative Estimators III: \citet{sunEstimatingDynamicTreatment2021}}
+
+
+\highlightP{TO BE SUMMARIZED}
+
+
+
+\newpage
+\bibliography{\CiteReference}
+
+
+
+
+\end{document}

@@ -1,0 +1,29 @@
+\contentsline {section}{\numberline {1}Review Articles}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}\citet {rothWhatTrendingDifferenceinDifferences2023}: What's Trending in Difference-in-Differences? A Synthesis of the Recent Econometrics Literature}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}\citet {dechaisemartinTwoWayFixedEffects2023}: Two-Way Fixed Effects and Differences-in-Differences with Heterogeneous Treatment Effects: A Survey}{3}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Staggered Adoption Designs}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}\citet {borusyakRevisitingEventStudyDesigns2024}: Revisiting Event-Study Designs: Robust and Efficient Estimation}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}\citet {goodman-baconDifferenceinDifferencesVariationTreatment2021}: Difference-in-Differences with Variation in Treatment Timing}{4}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}\citet {callawayDifferenceinDifferencesMultipleTime2021}: Difference-in-Differences with Multiple Time Periods}{4}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}\citet {sunEstimatingDynamicTreatment2021}: Estimating Dynamic Treatment Effects in Event Studies with Heterogeneous Treatment Effects}{5}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}\citet {dechaisemartinTwoWayFixedEffects2020}: Two-Way Fixed Effects Estimators with Heterogeneous Treatment Effects}{5}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}\citet {atheyDesignBasedAnalysisDifferenceinDifferences2022a}: Design-Based Analysis in Difference-In-Differences Settings with Staggered Adoption}{5}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}\citet {rothEfficientEstimationStaggered2023}: Efficient Estimation for Staggered Rollout Designs}{6}{subsection.2.7}%
+\contentsline {subsection}{\numberline {2.8}\citet {santannaDoublyRobustDifferenceinDifferences2020}: Doubly Robust Difference-in-Differences Estimators}{6}{subsection.2.8}%
+\contentsline {subsection}{\numberline {2.9}\citet {strezhnevSemiparametricWeightingEstimators2018}: Semiparametric Weighting Estimators for Multi-Period Difference-in-Differences Designs}{7}{subsection.2.9}%
+\contentsline {subsection}{\numberline {2.10}\citet {schmidheinyEventStudiesDistributed2023}: On Event Studies and Distributed-Lags in Two-Way Fixed Effects Models: Identification, Equivalence, and Generalization}{7}{subsection.2.10}%
+\contentsline {subsection}{\numberline {2.11}\citet {imaiUseTwoWayFixed2021}: On the Use of Two-Way Fixed Effects Regression Models for Causal Inference with Panel Data}{8}{subsection.2.11}%
+\contentsline {subsection}{\numberline {2.12}\citet {imaiWhenShouldWe2019}: When Should We Use Unit Fixed Effects Regression Models for Causal Inference with Longitudinal Data?}{8}{subsection.2.12}%
+\contentsline {subsection}{\numberline {2.13}\citet {gibbonsBrokenFixedEffects2019a}: Broken or Fixed Effects?}{9}{subsection.2.13}%
+\contentsline {section}{\numberline {3}Parallel Trends Assumptions}{9}{section.3}%
+\contentsline {subsection}{\numberline {3.1}\citet {rambachanMoreCredibleApproach2023}: A More Credible Approach to Parallel Trends}{9}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}\citet {rothWhenParallelTrends2023}: When Is Parallel Trends Sensitive to Functional Form?}{9}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}\citet {rothPretestCautionEventStudy2022a}: Pretest with Caution: Event-Study Estimates after Testing for Parallel Trends}{10}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Other Issues}{10}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Mover Designs}{10}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {4.1.1}\citet {hullEstimatingTreatmentEffects2018}: Estimating Treatment Effects in Mover Designs}{10}{subsubsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.2}Anticipation Effects}{11}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}\citet {hanIdentificationNonparametricModels2021}: Identification in Nonparametric Models for Dynamic Treatment Effects}{11}{subsubsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.3}Continuous Treatment}{11}{subsection.4.3}%
+\contentsline {subsubsection}{\numberline {4.3.1}\citet {dechaisemartinDifferenceinDifferencesEstimatorsTreatments2024}: Difference-in-Differences Estimators for Treatments Continuously Distributed at Every Period}{11}{subsubsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.4}Few Clustering Groups}{12}{subsection.4.4}%

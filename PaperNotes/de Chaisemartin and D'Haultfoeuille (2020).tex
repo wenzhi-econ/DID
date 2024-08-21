@@ -1,0 +1,224 @@
+\documentclass[12pt]{article}
+
+\newcommand{\CiteMathPackage}{../Notes/math}
+\newcommand{\CiteReference}{../Notes/reference.bib}
+
+% Packages
+\usepackage{setspace,geometry,fancyvrb,rotating}
+\usepackage{marginnote,datetime,enumitem}
+\usepackage{titlesec,indentfirst}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}
+\usepackage{threeparttable,booktabs,adjustbox}
+\usepackage{graphicx,epstopdf,float,soul,subfig}
+\usepackage[toc,page]{appendix}
+\usdate
+
+% Page Setup
+\geometry{scale=0.8}
+\titleformat{\paragraph}[runin]{\itshape}{}{}{}[.]
+\titlelabel{\thetitle.\;}
+\setlength{\parindent}{10pt}
+\setlength{\parskip}{10pt}
+\usepackage{Alegreya}
+\usepackage[T1]{fontenc}
+
+%% Bibliography
+\usepackage{natbib,fancybox,url,xcolor}
+\definecolor{MyBlue}{rgb}{0,0.2,0.6}
+\definecolor{MyRed}{rgb}{0.4,0,0.1}
+\definecolor{MyGreen}{rgb}{0,0.4,0}
+\definecolor{MyPink}{HTML}{E50379}
+\newcommand{\highlightR}[1]{{\emph{\color{MyRed}{#1}}}} 
+\newcommand{\highlightB}[1]{{\emph{\color{MyBlue}{#1}}}}
+\newcommand{\highlightP}[1]{{\emph{\color{MyPink}{#1}}}}
+\usepackage[bookmarks=true,bookmarksnumbered=true,colorlinks=true,linkcolor=MyBlue,citecolor=MyRed,filecolor=MyBlue,urlcolor=MyGreen]{hyperref}
+\bibliographystyle{econ}
+
+%% Theorem Environment
+\theoremstyle{definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{regression}{Regression}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{example}{Example}
+\newtheorem{corollary}[theorem]{Corollary}
+\usepackage{mathtools}
+\usepackage{\CiteMathPackage}
+
+
+\begin{document}
+
+%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??
+%?? title
+%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??
+
+\title{\bf Two-Way Fixed Effects Estimators with Heterogeneous Treatment Effects, American Economic Review, 2020}
+\author{Wenzhi Wang \thanks{This note is written in my pre-doc period at the University of Chicago Booth School of Business.} } 
+\date{\today}
+\maketitle
+
+\citet{dechaisemartinTwoWayFixedEffects2020}
+
+\section{Setup} \label{sec_setup}
+
+One considers observations that can be divided into $G$ groups and $T$ periods. For every $\bp{g, t} \in \bc{1, \ldots, G} \times \bc{1, \ldots, T}$, let $N_{g,t}$ denote the number of observations in group $g$ at period $t$, and let $N = \sum_{g,t} N_{g,t}$ be the total number of observations. The data may be an individual-level panel or repeated cross-section dataset where groups are, say, individuals' county of birth. The data could also be a cross section where cohort of birth plays the role of time. 
+
+One is interested in measuring the effect of a treatment on some outcome. Throughout the paper we assume the treatment is binary, but our results apply to any ordered treatment. Then, for every $\bp{i,g,t} \in \bc{1, \ldots, N_{g,t}} \times \bc{1, \ldots, G} \times \bc{1, \ldots, T}$, let $D_{i,g,t}$ and $\bp{Y_{i,g,t}\of{0}, Y_{i,g,t}\of{1}}$ respectively denote the treatment status and the potential outcomes without and with treatment of observation $i$ in group $g$ at period $t$.
+
+The outcome of observation $i$ in group $g$ and period $t$ is $Y_{i,g,t} = Y_{i,g,t}\of{D_{i,g,t}}$. For all $\bp{g,t}$, let 
+\begin{equation}
+    \notag 
+    \begin{aligned}
+    D_{g, t} & =\frac{1}{N_{g, t}} \sum_{i=1}^{N_{g, t}} D_{i, g, t}, \quad Y_{g, t}(0)=\frac{1}{N_{g, t}} \sum_{i=1}^{N_{g, t}} Y_{i, g, t}(0) \\
+    Y_{g, t}(1) & =\frac{1}{N_{g, t}} \sum_{i=1}^{N_{g, t}} Y_{i, g, t}(1), \quad \text { and } \quad Y_{g, t}=\frac{1}{N_{g, t}} \sum_{i=1}^{N_{g, t}} Y_{i, g, t} .
+    \end{aligned}
+\end{equation}
+Here, $D_{g,t}$ denotes the average treatment in group $g$ at period $t$, while $Y_{g, t}(0), Y_{g, t}(1)$, and $Y_{g, t}$ respectively denote the average potential outcomes without and with treatment and the average observed outcome in group $g$ at period $t$.
+
+\begin{assumption}[Balanced Panel of Groups] \label{BPG}
+    For all $\bp{g, t} \in \bc{1, \ldots, G} \times \bc{1, \ldots, T}$, $N_{g,t} > 0$.
+\end{assumption}
+
+Assumption \ref{BPG} requires that no group appears or disappears over time. This assumption is often satisfied. Without it, our results still hold but the notation becomes more complicated as the denominators of some of the fractions below may then be equal to zero. 
+
+\begin{assumption}[Sharp Design] \label{SD}
+    For all $\bp{g, t} \in \bc{1, \ldots, G} \times \bc{1, \ldots, T}$ and $i \in \bc{1, \ldots, N_{g,t}}$, $D_{i,g,t} = D_{g,t}$.
+\end{assumption}
+
+Assumption \ref{SD} requires that units' treatments do not vary within each $\bp{g,t}$ cell, a situation we refer to as a sharp design. This is for instane satisfied when the treatment is a group-level variable, for instance a county or a state law. This is also mechanically satisfied when $N_{g,t} = 1$. 
+
+\begin{assumption}[Independent Groups] \label{IG}
+    The vectors $\bp{Y_{g,t}\of{0}, Y_{g,t}\of{1}, D_{g,t}}_{1 \leq t \leq T}$ are mutually independent.
+\end{assumption}
+
+We consider $D_{g,t}, Y_{g,t}\of{0}, Y_{g,t}\of{1}$ as random variables. For instance, aggregate randome shocks may affect the average potential outcomes of group $g$ at period $t$. The treatment status of group $g$ of period $t$ may also be random. The expectations below are taken with respect to the distribution of those random variables. Assumption \ref{IG} allows for the possibility that the treatments and potential outcomes of a group may be correlated over time, but it requires that the potential outcomes and treatments of different groups be independent. 
+
+\begin{assumption}[Strong Exogeneity] \label{SE}
+    For all $\bp{g, t} \in \bc{1, \ldots, G} \times \bc{2, \ldots, T}$, 
+    $$
+    \E\bs{Y_{g,t}\of{0} - Y_{g, t-1}\of{0} \mid D_{g,1}, \ldots D_{g, T}} = \E\bs{Y_{g,t}\of{0} - Y_{g, t-1}\of{0}}.
+    $$
+\end{assumption}
+
+Assumption \ref{SE} requires that the shocks affecting a group's $Y_{g,t}\of{0}$ be mean independent of that group's treatment sequence. This rules out the possibility that a group gets treated because it experiences negative shocks. Assumption \ref{SE} is related to the strong exogeneity condition in panel data models, which, as is well known, is necessary to obtain the consistency of the fixed effects estimator. 
+
+We now define the FE regression.
+
+\begin{regression}[Fixed Effects Regression]
+    Let $\wh{\b}_{fe}$ denote the coefficient of $D_{g,t}$ in an OLS regression fo $Y_{i,g,t}$ on group fixed effects, period fixed effects, and $D_{g,t}$. Let $\b_{fe} = \E\bs{\wh{\b}_{fe}}$.
+\end{regression}
+
+For all $g$ and $t$, let $N_{g\cdot} = \sum_{t=1}^{T} N_{g,t}$ and $N_{\cdot t} = \sum_{g=1}^{G} N_{g,t}$ respectively denote the total number of observations in group $g$ and in period $t$. For any variable $X_{g,t}$ defined in each $\bp{g,t}$ cell, let $X_{g\cdot} = \sum_{t=1}^{T} \bp{N_{g,t}/N_{g\cdot}} X_{g,t}$ denote the average value of $X_{g,t}$ in group $g$, let $X_{\cdot t} = \sum_{g=1}^{G} \bp{N_{g,t}/N_{\cdot t}} X_{g,t}$ denote the average value of $X_{g,t}$ in period $t$, and let $X_{\cdot\cdot} = \sum_{g,t} \bp{N_{g,t}/N} X_{g,t}$ denote the average value of $X_{g,t}$. Finally, for any variable $X_{g,t}$, we let $\bds{X}$ denote the vector $\bp{X_{g,t}}_{\bp{g, t} \in \bc{1, \ldots, G} \times \bc{1, \ldots, T}}$ collecting the values of that variable in each $\bp{g,t}$ cell. For instance, $\bds{D}$ is the vector $\bp{D_{g,t}}_{\bp{g, t} \in \bc{1, \ldots, G} \times \bc{1, \ldots, T}}$ collecting the treatments of all the $(g, t)$ cells.
+
+\section{Two-Way Fixed Effects Regressions}
+
+\subsection{A Decomposition Result}
+
+We study the FE regression under the following common trends assumption. 
+
+\begin{assumption}[Common Trends] \label{CT}
+    For $t \geq 2$, $\E\bs{Y_{g,t}\of{0} - Y_{g,t-1}\of{0}}$ does not vary across $g$.
+\end{assumption}
+
+Assumption \ref{CT} requires that the expectation of the outcome without treatment follow the same evolution over time in every group. When $t$ represents birth cohorts, Assumption \ref{CT} requires that the outcome different between consecutive cohorts be the same across groups. 
+
+Let $N_1 = \sum_{i,g,t} = D_{i,g,t}$ denote the number of treated units, let 
+\begin{equation}
+    \notag 
+    \D^{TR} = \frac{1}{N_1} \sum_{\bp{i,g,t}: D_{g,t}=1} \bs{Y_{i,g,t}\of{1} - Y_{i,g,t}\of{0}}
+\end{equation}
+denote the average treatment effect across all treated units, and let $\d^{TR} = \E\bs{\D^{TR}}$ denote the expectation of that parameter, hereafter referred to as the ATT. For any $\bp{g, t} \in \bc{1, \ldots, G} \times \bc{1, \ldots, T}$, let 
+\begin{equation}
+    \notag 
+    \D_{g,t} = \frac{1}{N_{g,t}} \sum_{i=1}^{N_{g,t}} \bs{Y_{i,g,t}\of{1} - Y_{i,g,t}\of{0}}
+\end{equation}
+denote the ATE in cell $\bp{g,t}$. Note that $\d^{TR}$ is equal to the expectation of a weighted average of the treated cells' $\D_{g,t}$:
+\begin{equation}
+    \label{2}
+    \d^{TR} = \E\bs{\sum_{\bp{g,t}: D_{g,t} = 1} \frac{N_{g,t}}{N_1} \D_{g,t}}.
+\end{equation}
+
+Under the common trends assumption, we show that $\b_{fe}$ is also equal to the expectation of a weighted sum of the $\D_{g,t}$ terms, with potentially some negative weights. 
+
+Let $\ve_{g,t}$ denote the residual of observations in cell $\bp{g,t}$ in the regression of $D_{g,t}$ on group and period fixed effects, 
+\begin{equation}
+    \notag 
+    D_{g,t} = \a + \g_g + \l_t + \ve_{g,t}.
+\end{equation}
+
+One can show that if the regressors in Regression 1 are not collinear, the average value of $\ve_{g,t}$ across all treated $\bp{g,t}$ cells differs from $0$: $\sum_{\bp{g,t}: D_{g,t} = 1} \frac{N_{g,t}}{N_1} \ve_{g,t} \neq 0$. Then let $\o_{g,t}$ denote $\ve_{g,t}$ divided by that average:
+\begin{equation}
+    \notag 
+    \o_{g,t} = \frac{\ve_{g,t}}{\sum_{\bp{g,t}: D_{g,t} = 1} \frac{N_{g,t}}{N_1} \ve_{g,t}}.
+\end{equation}
+
+\begin{theorem} \label{thm1}
+    Suppose that Assumptions \ref{BPG}-\ref{CT} hold. Then 
+    \begin{equation}
+        \notag 
+        \b_{fe} = \E\bs{\sum_{\bp{g,t}: D_{g,t} = 1} \frac{N_{g,t}}{N_1} \o_{g,t} \D_{g,t}}.
+    \end{equation}
+\end{theorem}
+
+This result implies that in general, $\b_{fe} \neq \d^{TR}$, so $\wh{\b}_{fe}$ is a biased estimator of the ATT. 
+
+\begin{example}
+    To illustrate this, we consider a simple example of a staggered adoption design with two groups and three periods, and where the treatments are nonstochastic: group $1$ is untreated at periods $1$ and $2$ and treated at period $3$, while group $2$ is untreated at period $1$ and treated both at periods $2$ and $3$. We also assume that $N_{g,t} / N_{g,t-1}$ does not vary across $g$: all groups experience the same growth of their number of observations from $t-1$ to $t$, a requirement that is for instance satisfied when the data is a balanced panel. Then one can show that 
+    $$
+    \ve_{g,t} = D_{g,t} - D_{g\cdot} - D_{\cdot t} + D_{\cdot\cdot},
+    $$
+    thus implying that 
+    $$
+    \begin{aligned}
+    & \varepsilon_{1,3}=1-1 / 3-1+1 / 2=1 / 6 \\
+    & \varepsilon_{2,2}=1-2 / 3-1 / 2+1 / 2=1 / 3 \\
+    & \varepsilon_{2,3}=1-2 / 3-1+1 / 2=-1 / 6 
+    \end{aligned}.
+    $$
+    
+    The residual is negative in group $2$ and period $3$, because the regression predicts a treatment probability larger than one in that cell, a classic extrapolation problem with linear regressions. Then, under the common trends assumption, it follows from Theorem \ref{thm1} and the fact that the treatments are nonstochastic that 
+    \begin{equation}
+        \notag 
+        \beta_{f e}=1 / 2 E\left[\Delta_{1,3}\right]+E\left[\Delta_{2,2}\right]-1 / 2 E\left[\Delta_{2,3}\right].
+    \end{equation}
+    Here, $\b_{fe}$ is equal to a weighted sum of the ATEs in group $1$ at period $3$, group $2$ at period $2$, and group $2$ at period $3$, the three treated $\bp{g,t}$ cells. However, the weight assigned to each ATE differs from $1/3$, the proportion that each cell accounts for in the population of treated observations. Therefore, $\b_{fe}$ is not equal to $\d^{TR}$. Perhaps more worryingly, not all the weights are positive. Consequently, $\b_{fe}$ may be a very misleading measure of the treatment effect.
+\end{example}
+
+We now generalize the previous illustration by characterizing the $\bp{g,t}$ cells whose ATEs are weighted negatively by $\b_{fe}$.
+
+\begin{proposition}
+    \label{prop1}
+    Suppose that Assumption \ref{BPG} holds and for all $t \geq 2$, $N_{g,t}/N_{g,,t-1}$ does not vary across $g$. Then, for all $\bp{g, t, t^\prime}$ such that $D_{g,t} = D_{g, t^\prime} = 1$, $D_{\cdot t} > D_{\cdot, t^{\prime}}$ implies $\o_{g,t} < \o_{g, t^{\prime}}$. Similarly, for all $\bp{g, g^{\prime}, t}$ such that $D_{g,t} = D_{g^{\prime}, t} = 1$, $D_{g\cdot} > D_{g^{\prime} \cdot}$ implies $\o_{g,t} < \o_{g^{\prime}, t}$.
+\end{proposition}
+
+Proposition \ref{prop1} shows that $\b_{fe}$ is more likely to assign a negative weight to periods where a large fraction of groups are treated, and to groups treated for many periods. Then, negative weights are a concern when treatment effects differ between periods with many versus few treated groups, or between groups treated for many versus few periods. 
+
+\begin{assumption}[Staggered Adoption Designs] \label{SAD}
+    For all $g$, $D_{g,t} \geq D_{g, t-1}$ for all $t \geq 2$.
+\end{assumption}
+
+In staggered adoption designs, $D_{\cdot t}$ is increasing in $t$, so Proposition \ref{prop1} implies that $\o_{g,t}$ is decreasing in $t$. Proposition \ref{prop1} also implies that in that design, groups that adopt the treatment earlier are more likely to receive some negative weights.
+
+\subsection{Robustness to Heterogeneous Treatment Effects}
+
+Theorem \ref{thm1} shows that in sharp designs with many groups and periods, $\wh{\b}_{fe}$ may be a misleading measure of the treatment effect under the standard common trends assumption, if the treatment effect is heterogeneous across groups and time periods. In the corollary below, we propose two robustness measures that can be used to assess how serious that concern is. 
+
+\subsection{Extension to the First-Different Regression}
+
+\begin{regression}[First-Difference Regression]
+    Let $\wh{\b}_{fd}$ denote the coefficient of $D_{g,t} - D_{g,t-1}$ in an OLS regression of $Y_{g,t} - Y_{g,t-1}$ on period fixed effects and $D_{g,t} - D_{g, t-1}$, among observations for which $t \geq 2$. Let $\b_{fd} = \E\bs{\wh{\b}_{fd}}$.
+\end{regression}
+
+When $T=2$ and $N_{g,2}/N_{g,1}$ does not vary across $g$, meaning that all groups experience the same growth of their number of units from period $1$ to period $2$, one can show that $\wh{\b}_{fe} = \wh{\b}_{fd}$. But, $\wh{\b}_{fe}$ differs from $\wh{\b}_{fd}$ if $T > 2$ or $N_{g,2}/N_{g,1}$ varies across $g$.
+
+\section{An Alternative Estimator}
+
+In this section, we show that it is possible to estimate a well-defined causal effect even if treatment effects are heterogeneous across groups or over time. Let 
+
+
+\bibliography{\CiteReference}
+
+
+\end{document}

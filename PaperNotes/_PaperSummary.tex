@@ -1,0 +1,215 @@
+\documentclass[12pt]{article}
+
+\newcommand{\CiteMathPackage}{../Notes/math}
+\newcommand{\CiteReference}{../Notes/reference.bib}
+
+% Packages
+\usepackage{setspace,geometry,fancyvrb,rotating}
+\usepackage{marginnote,datetime,enumitem}
+\usepackage{titlesec,indentfirst}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}
+\usepackage{threeparttable,booktabs,adjustbox}
+\usepackage{graphicx,epstopdf,float,soul,subfig}
+\usepackage[toc,page]{appendix}
+\usdate
+
+% Page Setup
+\geometry{scale=0.8}
+\titleformat{\paragraph}[runin]{\itshape}{}{}{}[.]
+\titlelabel{\thetitle.\;}
+\setlength{\parindent}{10pt}
+\setlength{\parskip}{10pt}
+% \usepackage{fourier}    		  % Favourite Font
+\usepackage{Alegreya}
+\usepackage[T1]{fontenc}
+
+%% Bibliography
+\usepackage{natbib,fancybox,url,xcolor}
+\definecolor{MyBlue}{rgb}{0,0.2,0.6}
+\definecolor{MyRed}{rgb}{0.4,0,0.1}
+\definecolor{MyGreen}{rgb}{0,0.4,0}
+\definecolor{MyPink}{HTML}{E50379}
+\newcommand{\highlightR}[1]{{\emph{\color{MyRed}{#1}}}} 
+\newcommand{\highlightB}[1]{{\emph{\color{MyBlue}{#1}}}}
+\newcommand{\highlightP}[1]{{\emph{\color{MyPink}{#1}}}}
+\usepackage[bookmarks=true,bookmarksnumbered=true,colorlinks=true,linkcolor=MyBlue,citecolor=MyRed,filecolor=MyBlue,urlcolor=MyGreen]{hyperref}
+\bibliographystyle{econ}
+
+%% Theorem Environment
+\theoremstyle{definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{example}{Example}
+\newtheorem{corollary}[theorem]{Corollary}
+\usepackage{mathtools}
+\usepackage{\CiteMathPackage}
+
+\begin{document}
+
+%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??
+%?? title
+%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??
+
+\title{\bf Design-Based Analysis in Difference-In-Differences Settings with Staggered Adoption, Journal of Econometrics, 2022}
+\author{Wenzhi Wang \thanks{This note is written in my pre-doc period at the University of Chicago Booth School of Business.} } 
+\date{\today}
+\maketitle
+
+{\highlightP{INCOMPLETE SUMMARY}}
+
+{\normalsize \tableofcontents}
+
+\newpage
+
+\section{Review Articles}
+
+\subsection{\citet{rothWhatTrendingDifferenceinDifferences2023}: What's Trending in Difference-in-Differences? A Synthesis of the Recent Econometrics Literature}
+
+{\bf Paper}: What's Trending in Difference-in-Differences? A Synthesis of the Recent Econometrics Literature, Journal of Econometrics, 2023
+
+{\bf Abstract}: This paper synthesizes recent advances in the econometrics of difference-in-differences (DiD) and provides concrete recommendations for practitioners. We begin by articulating a simple set of ``canonical'' assumptions under which the econometrics of DiD are well-understood. We then argue that recent advances in DiD methods can be broadly classified as relaxing some components of the canonical DiD setup, with a focus on (i) multiple periods and variation in treatment timing, (ii) potential violations of parallel trends, or (iii) alternative frameworks for inference. Our discussion highlights the different ways that the DiD literature has advanced beyond the canonical model, and helps to clarify when each of the papers will be relevant for empirical work. We conclude by discussing some promising areas for future research.
+
+\subsection{\citet{dechaisemartinTwoWayFixedEffects2023}: Two-Way Fixed Effects and Differences-in-Differences with Heterogeneous Treatment Effects: A Survey}
+
+{\bf Paper}: Two-Way Fixed Effects and Differences-in-Differences with Heterogeneous Treatment Effects: A Survey, The Econometrics Journal, 2023
+
+{\bf Abstract}: Linear regressions with period and group fixed effects are widely used to estimate policies' effects: 26 of the 100 most cited papers published by the American Economic Review from 2015 to 2019 estimate such regressions. It has recently been shown that those regressions may produce misleading estimates if the policy's effect is heterogeneous between groups or over time, as is often the case. This survey reviews a fast-growing literature that documents this issue and that proposes alternative estimators robust to heterogeneous effects. We use those alternative estimators to revisit Wolfers (2006a).
+
+\section{Staggered Adoption Designs}
+
+\subsection{\citet{borusyakRevisitingEventStudyDesigns2024}: Revisiting Event-Study Designs: Robust and Efficient Estimation}
+
+{\bf Paper}: Revisiting Event-Study Designs: Robust and Efficient Estimation, Review of Economic Studies, 2024
+
+{\bf Abstract}: We develop a framework for difference-in-differences designs with staggered treatment adoption and heterogeneous causal effects. We show that conventional regression-based estimators fail to provide unbiased estimates of relevant estimands absent strong restrictions on treatment-effect homogeneity. We then derive the efficient estimator addressing this challenge, which takes an intuitive “imputation” form when treatment-effect heterogeneity is unrestricted. We characterize the asymptotic behaviour of the estimator, propose tools for inference, and develop tests for identifying assumptions. Our method applies with time-varying controls, in triple-difference designs, and with certain non-binary treatments. We show the practical relevance of our results in a simulation study and an application. Studying the consumption response to tax rebates in the U.S., we find that the notional marginal propensity to consume is between 8 and 11\% in the first quarter—about half as large as benchmark estimates used to calibrate macroeconomic models—and predominantly occurs in the first month after the rebate.
+
+\subsection{\citet{goodman-baconDifferenceinDifferencesVariationTreatment2021}: Difference-in-Differences with Variation in Treatment Timing}
+
+{\bf Paper}: Difference-in-Differences with Variation in Treatment Timing, Journal of Econometrics, 2021
+
+{\bf Abstract}: The canonical difference-in-differences (DD) estimator contains two time periods, ``pre'' and ``post'', and two groups, ``treatment'' and ``control''. Most DD applications, however, exploit variation across groups of units that receive treatment at different times. This paper shows that the two-way fixed effects estimator equals a weighted average of all possible two-group/two-period DD estimators in the data. A causal interpretation of twoway fixed effects DD estimates requires both a parallel trends assumption and treatment effects that are constant over time. I show how to decompose the difference between two specifications, and provide a new analysis of models that include time-varying controls.
+
+\subsection{\citet{callawayDifferenceinDifferencesMultipleTime2021}: Difference-in-Differences with Multiple Time Periods}
+
+{\bf Paper}: Difference-in-Differences with Multiple Time Periods, Journal of Econometrics, 2021
+
+{\bf Abstract}: In this article, we consider identification, estimation, and inference procedures for treatment effect parameters using Difference-in-Differences (DiD) with (i) multiple time periods, (ii) variation in treatment timing, and (iii) when the ``parallel trends assumption'' holds potentially only after conditioning on observed covariates. We show that a family of causal effect parameters are identified in staggered DiD setups, even if differences in observed characteristics create non-parallel outcome dynamics between groups. Our identification results allow one to use outcome regression, inverse probability weighting, or doubly-robust estimands. We also propose different aggregation schemes that can be used to highlight treatment effect heterogeneity across different dimensions as well as to summarize the overall effect of participating in the treatment. We establish the asymptotic properties of the proposed estimators and prove the validity of a computationally convenient bootstrap procedure to conduct asymptotically valid simultaneous (instead of pointwise) inference. Finally, we illustrate the relevance of our proposed tools by analyzing the effect of the minimum wage on teen employment from 2001-2007. Open-source software is available for implementing the proposed methods.
+
+\subsection{\citet{sunEstimatingDynamicTreatment2021}: Estimating Dynamic Treatment Effects in Event Studies with Heterogeneous Treatment Effects}
+
+{\bf Paper}: Estimating Dynamic Treatment Effects in Event Studies with Heterogeneous Treatment Effects, Journal of Econometrics, 2021
+
+{\bf Abstract}: To estimate the dynamic effects of an absorbing treatment, researchers often use twoway fixed effects regressions that include leads and lags of the treatment. We show that in settings with variation in treatment timing across units, the coefficient on a given lead or lag can be contaminated by effects from other periods, and apparent pretrends can arise solely from treatment effects heterogeneity. We propose an alternative estimator that is free of contamination, and illustrate the relative shortcomings of two-way fixed effects regressions with leads and lags through an empirical application.
+
+\subsection{\citet{dechaisemartinTwoWayFixedEffects2020}: Two-Way Fixed Effects Estimators with Heterogeneous Treatment Effects}
+
+{\bf Paper}: Two-Way Fixed Effects Estimators with Heterogeneous Treatment Effects, American Economic Review, 2020
+
+{\bf Abstract}: Linear regressions with period and group fixed effects are widely used to estimate treatment effects. We show that they estimate weighted sums of the average treatment effects (ATE) in each group and period, with weights that may be negative. Due to the negative weights, the linear regression coefficient may for instance be negative while all the ATEs are positive. We propose another estimator that solves this issue. In the two applications we revisit, it is significantly different from the linear regression estimator.
+
+\subsection{\citet{atheyDesignBasedAnalysisDifferenceinDifferences2022a}: Design-Based Analysis in Difference-In-Differences Settings with Staggered Adoption}
+
+{\bf Paper}: Design-Based Analysis in Difference-In-Differences Settings with Staggered Adoption, Journal of Econometrics, 2022
+
+{\bf Abstract}: In this paper we study estimation of and inference for average treatment effects in a setting with panel data. We focus on the staggered adoption setting where units, e.g, individuals, firms, or states, adopt the policy or treatment of interest at a particular point in time, and then remain exposed to this treatment at all times afterwards. We take a design perspective where we investigate the properties of estimators and procedures given assumptions on the assignment process. We show that under random assignment of the adoption date the standard Difference-In-Differences (DID) estimator is an unbiased estimator of a particular weighted average causal effect. We characterize the exact finite sample properties of this estimand, and show that the standard variance estimator is conservative.
+
+\subsection{\citet{rothEfficientEstimationStaggered2023}: Efficient Estimation for Staggered Rollout Designs}
+
+{\bf Paper}: Efficient Estimation for Staggered Rollout Designs, Journal of Political Economy Microeconomics, 2023
+
+{\bf Abstract}: We study estimation of causal effects in staggered-rollout designs—that is, settings where there is staggered treatment adoption and the timing of treatment is as good as randomly assigned. We derive the most efficient estimator in a class of estimators that nests several popular generalized difference-in-differences methods. A feasible plug-in version of the efficient estimator is asymptotically unbiased, with efficiency (weakly) dominating that of existing approaches. We provide both t-based and permutation-test-based methods for inference. In an application to a training program for police officers, confidence intervals for the proposed estimator are as much as eight times shorter than those for existing approaches.
+
+\subsection{\citet{santannaDoublyRobustDifferenceinDifferences2020}: Doubly Robust Difference-in-Differences Estimators}
+
+{\bf Paper}: Doubly Robust Difference-in-Differences Estimators, Journal of Econometrics, 2020
+
+{\bf Abstract}: This article proposes doubly robust estimators for the average treatment effect on the treated (ATT) in difference-in-differences (DID) research designs. In contrast to alternative DID estimators, the proposed estimators are consistent if either (but not necessarily both) a propensity score or outcome regression working models are correctly specified. We also derive the semiparametric efficiency bound for the ATT in DID designs when either panel or repeated cross-section data are available, and show that our proposed estimators attain the semiparametric efficiency bound when the working models are correctly specified. Furthermore, we quantify the potential efficiency gains of having access to panel data instead of repeated cross-section data. Finally, by paying particular attention to the estimation method used to estimate the nuisance parameters, we show that one can sometimes construct doubly robust DID estimators for the ATT that are also doubly robust for inference. Simulation studies and an empirical application illustrate the desirable finite-sample performance of the proposed estimators. Open-source software for implementing the proposed policy evaluation tools is available.
+
+\subsection{\citet{strezhnevSemiparametricWeightingEstimators2018}: Semiparametric Weighting Estimators for Multi-Period Difference-in-Differences Designs}
+
+{\bf Paper}: Semiparametric Weighting Estimators for Multi-Period Difference-in-Differences Designs, Journal of Econometrics, 2020
+
+{\bf Abstract}: Difference-in-differences designs are a powerful tool for causal inference in observational settings where typical selection-on-observables assumptions fail to hold. When a pre-treatment period is observed for all units, the treatment effect on the treated in the second period is identified non-parametrically under a weaker “parallel trends” assumption. However, researchers lack a reliable means of generalizing this approach to designs with multiple preand post-treatment periods, particularly when the parallel trends assumption only holds conditional on a set of covariates. While the two-period difference-in-differences estimator is equivalent to a fully-saturated linear regression model with unit and time dummy parameters, two-way fixed effects regression estimators do not recover the average treatment effect when there are more than two treatment periods even when parallel trends holds unless the true outcome model is correctly specified. This paper clarifies the causal estimands in a multi-period difference-in-differences design and develops an estimation strategy that extends Abadie's (2005) semiparametric inverse propensity weighting method that allows researchers to incorporate covariates without necessarily making strong assumptions about the data generating process for the outcome. It evaluates this new method on the effect of United States' investment treaties on foreign direct investment.
+
+
+\subsection{\citet{schmidheinyEventStudiesDistributed2023}: On Event Studies and Distributed-Lags in Two-Way Fixed Effects Models: Identification, Equivalence, and Generalization}
+
+{\bf Paper}: On Event Studies and Distributed-Lags in Two-Way Fixed Effects Models: Identification, Equivalence, and Generalization, Journal of Applied Econometrics, 2023
+
+{\bf Abstract}: We discuss three important properties of panel data event study designs. First,  assuming constant treatment effects before and/or after some event time, also  known as binning, is a natural restriction, which identifies dynamic treatment  effects in the absence of never-treated units. Second, event study designs with  binned endpoints and distributed-lag models are numerically identical. Third,  classic dummy variable event study designs can be generalized to models that  account for multiple treatments of different signs and varying intensities. We  demonstrate the practical relevance of our methodological points in an application studying the effects of unemployment benefit duration on job search  effort.
+
+\subsection{\citet{imaiUseTwoWayFixed2021}: On the Use of Two-Way Fixed Effects Regression Models for Causal Inference with Panel Data}
+
+{\bf Paper}: On the Use of Two-Way Fixed Effects Regression Models for Causal Inference with Panel Data, Political Analysis, 2021
+
+{\bf Abstract}: The two-way linear fixed effects regression (2FE) has become a default method for estimating causal effects from panel data. Many applied researchers use the 2FE estimator to adjust for unobserved unit-specific and time-specific confounders at the same time. Unfortunately, we demonstrate that the ability of the 2FE model to simultaneously adjust for these two types of unobserved confounders critically relies upon the assumption of linear additive effects. Another common justification for the use of the 2FE estimator is based on its equivalence to the difference-in-differences estimator under the simplest setting with two groups and two time periods. We show that this equivalence does not hold under more general settings commonly encountered in applied research. Instead, we prove that the multi-period difference-in-differences estimator is equivalent to the weighted 2FE estimator with some observations having negative weights. These analytical results imply that in contrast to the popular belief, the 2FE estimator does not represent a designbased, nonparametric estimation strategy for causal inference. Instead, its validity fundamentally rests on the modeling assumptions.
+
+\subsection{\citet{imaiWhenShouldWe2019}: When Should We Use Unit Fixed Effects Regression Models for Causal Inference with Longitudinal Data?}
+
+{\bf Paper}: When Should We Use Unit Fixed Effects Regression Models for Causal Inference with Longitudinal Data?, American Journal of Political Science, 2019
+
+{\bf Abstract}: Many researchers use unit fixed effects regression models as their default methods for causal inference with longitudinal data. We show that the ability of these models to adjust for unobserved time-invariant confounders comes at the expense of dynamic causal relationships, which are permitted under an alternative selection-on-observables approach. Using the nonparametric directed acyclic graph, we highlight two key causal identification assumptions of unit fixed effects models: Past treatments do not directly influence current outcome, and past outcomes do not affect current treatment. Furthermore, we introduce a new nonparametric matching framework that elucidates how various unit fixed effects models implicitly compare treated and control observations to draw causal inference. By establishing the equivalence between matching and weighted unit fixed effects estimators, this framework enables a diverse set of identification strategies to adjust for unobservables in the absence of dynamic causal relationships between treatment and outcome variables. We illustrate the proposed methodology through its application to the estimation of GATT membership effects on dyadic trade volume.
+
+\subsection{\citet{gibbonsBrokenFixedEffects2019a}: Broken or Fixed Effects?}
+
+{\bf Paper}: Broken or Fixed Effects?, Journal of Econometric Methods, 2019
+
+{\bf Abstract}: We replicate eight influential papers to provide empirical evidence that, in the presence of heterogeneous treatment effects, OLS with fixed effects (FE) is generally not a consistent estimator of the average treatment effect (ATE). We propose two alternative estimators that recover the ATE in the presence of group-specific heterogeneity. We document that heterogeneous treatment effects are common and the ATE is often statistically and economically different from the FE estimate. In all but one of our replications, there is statistically significant treatment effect heterogeneity and, in six, the ATEs are either economically or statistically different from the FE estimates.
+
+\section{Parallel Trends Assumptions}
+
+\subsection{\citet{rambachanMoreCredibleApproach2023}: A More Credible Approach to Parallel Trends}
+
+{\bf Paper}: A More Credible Approach to Parallel Trends, Review of Economic Studies, 2023
+
+{\bf Abstract}: This paper proposes tools for robust inference in difference-in-differences and eventstudy designs where the parallel trends assumption may be violated. Instead of requiring that parallel trends holds exactly, we impose restrictions on how different the post-treatment violations of parallel trends can be from the pre-treatment differences in trends (``pre-trends''). The causal parameter of interest is partially identified under these restrictions. We introduce two approaches that guarantee uniformly valid inference under the imposed restrictions, and we derive novel results showing that they have desirable power properties in our context. We illustrate how economic knowledge can inform the restrictions on the possible violations of parallel trends in two economic applications. We also highlight how our approach can be used to conduct sensitivity analyses showing what causal conclusions can be drawn under various restrictions on the possible violations of the parallel trends assumption.
+
+\subsection{\citet{rothWhenParallelTrends2023}: When Is Parallel Trends Sensitive to Functional Form?}
+
+{\bf Paper}: When Is Parallel Trends Sensitive to Functional Form?, Econometrica, 2023
+
+{\bf Abstract}: This paper assesses when the validity of difference-in-differences depends on functional form. We provide a novel characterization: the parallel trends assumption holds under all strictly monotonic transformations of the outcome if and only if a stronger ``parallel trends'' -- type condition holds for the cumulative distribution function of untreated potential outcomes. This condition for parallel trends to be insensitive to functional form is satisfied if and essentially only if the population can be partitioned into a subgroup for which treatment is effectively randomly assigned and a remaining subgroup for which the distribution of untreated potential outcomes is stable over time. These conditions have testable implications, and we introduce falsification tests for the null that parallel trends is insensitive to functional form.
+
+\subsection{\citet{rothPretestCautionEventStudy2022a}: Pretest with Caution: Event-Study Estimates after Testing for Parallel Trends}
+
+{\bf Paper}: Pretest with Caution: Event-Study Estimates after Testing for Parallel Trends, American Economic Review: Insights, 2022
+
+{\bf Abstract}: Tests for pre-existing trends (``pre-trends'') are a common way of assessing the plausibility of the parallel trends assumption in difference-in-differences and related research  designs. This paper highlights some important limitations of pre-trends testing. From  a theoretical perspective, I analyze the distribution of conventional estimates and confidence intervals conditional on surviving a pre-test for pre-trends. I show that in nonpathological cases, the bias of conventional estimates conditional on passing a pre-test  can be worse than the unconditional bias. Thus, pre-tests meant to mitigate bias and  coverage issues in published work can in fact exacerbate them. I empirically investigate  the practical relevance of these concerns in simulations based on a systematic review  of recent papers in leading economics journals. I find that conventional pre-tests are  often underpowered against plausible violations of parallel trends that produce bias of  a similar magnitude as the estimated treatment effect. Distortions from pre-testing can  also be substantial. Finally, I discuss alternative approaches that can improve upon the  standard practice of relying on pre-trends testing.
+
+\section{Other Issues}
+
+\subsection{Mover Designs}
+
+\subsubsection{\citet{hullEstimatingTreatmentEffects2018}: Estimating Treatment Effects in Mover Designs}
+
+{\bf Paper}: Estimating Treatment Effects in Mover Designs, Working Paper, 2018
+
+{\bf Abstract}: Researchers increasingly leverage movement across multiple treatments to estimate causal effects. While these ``mover regressions'' are often motivated by a linear constant-effects model, it is not clear what they capture under weaker quasiexperimental assumptions. I show that binary treatment mover regressions recover a convex average of four difference-in-difference comparisons and are thus causally interpretable under a standard parallel trends assumption. Estimates from multipletreatment models, however, need not be causal without stronger restrictions on the heterogeneity of treatment effects and time-varying shocks. I propose a class of two-step estimators to isolate and combine the large set of difference-in-difference quasi-experiments generated by a mover design, identifying mover average treatment effects under conditional-on-covariate parallel trends and effect homogeneity restrictions. I characterize the efficient estimators in this class and derive specification tests based on the model's overidentifying restrictions. Future drafts will apply the theory to the Finkelstein et al. (2016) movers design, analyzing the causal effects of geography on healthcare utilization.
+
+\subsection{Anticipation Effects}
+
+\subsubsection{\citet{hanIdentificationNonparametricModels2021}: Identification in Nonparametric Models for Dynamic Treatment Effects}
+
+{\bf Paper}: Identification in Nonparametric Models for Dynamic Treatment Effects, Journal of Econometrics, 2021
+
+{\bf Abstract}: This paper develops a nonparametric model that represents how sequences of outcomes and treatment choices influence one another in a dynamic manner. In this setting, we are interested in identifying the average outcome for individuals in each period, had a particular treatment sequence been assigned. The identification of this quantity allows us to identify the average treatment effects (ATE's) and the ATE's on transitions, as well as the optimal treatment regimes, namely, the regimes that maximize the (weighted) sum of the average potential outcomes, possibly less the cost of the treatments. The main contribution of this paper is to relax the sequential randomization assumption widely used in the biostatistics literature by introducing a flexible choice-theoretic framework for a sequence of endogenous treatments. This framework allows non-compliance of subjects in experimental studies or endogenous treatment decisions in observational settings. We show that the parameters of interest are identified under each period's exclusion restrictions, which are motivated by, e.g., a sequence of randomized treatment assignments or encouragements and a behavioral/information assumption on agents who receive treatments.
+
+\subsection{Continuous Treatment}
+
+\subsubsection{\citet{dechaisemartinDifferenceinDifferencesEstimatorsTreatments2024}: Difference-in-Differences Estimators for Treatments Continuously Distributed at Every Period}
+
+{\bf Paper}: Difference-in-Differences Estimators for Treatments Continuously Distributed at Every Period
+
+{\bf Abstract}: We propose difference-in-differences estimators in designs where the treatment is continuously distributed at every period, as is often the case when one studies the effects of taxes,  tariffs, or prices. We assume that between consecutive periods, the treatment of some units,  the switchers, changes, while the treatment of other units remains constant. We show that  under a placebo-testable parallel-trends assumption, averages of the slopes of switchers' potential outcomes can be nonparametrically estimated. We generalize our estimators to  the instrumental-variable case. We use our estimators to estimate the price-elasticity of  gasoline consumption.
+
+
+\subsection{Few Clustering Groups}
+
+
+
+\bibliography{\CiteReference}
+
+\end{document}

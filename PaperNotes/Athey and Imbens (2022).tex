@@ -1,0 +1,292 @@
+\documentclass[12pt]{article}
+
+\newcommand{\CiteMathPackage}{../Notes/math}
+\newcommand{\CiteReference}{../Notes/reference.bib}
+
+% Packages
+\usepackage{setspace,geometry,fancyvrb,rotating}
+\usepackage{marginnote,datetime,enumitem}
+\usepackage{titlesec,indentfirst}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}
+\usepackage{threeparttable,booktabs,adjustbox}
+\usepackage{graphicx,epstopdf,float,soul,subfig}
+\usepackage[toc,page]{appendix}
+\usdate
+
+% Page Setup
+\geometry{scale=0.8}
+\titleformat{\paragraph}[runin]{\itshape}{}{}{}[.]
+\titlelabel{\thetitle.\;}
+\setlength{\parindent}{10pt}
+\setlength{\parskip}{10pt}
+% \usepackage{fourier}    		  % Favourite Font
+\usepackage{Alegreya}
+\usepackage[T1]{fontenc}
+
+%% Bibliography
+\usepackage{natbib,fancybox,url,xcolor}
+\definecolor{MyBlue}{rgb}{0,0.2,0.6}
+\definecolor{MyRed}{rgb}{0.4,0,0.1}
+\definecolor{MyGreen}{rgb}{0,0.4,0}
+\definecolor{MyPink}{HTML}{E50379}
+\newcommand{\highlightR}[1]{{\emph{\color{MyRed}{#1}}}} 
+\newcommand{\highlightB}[1]{{\emph{\color{MyBlue}{#1}}}}
+\newcommand{\highlightP}[1]{{\emph{\color{MyPink}{#1}}}}
+\usepackage[bookmarks=true,bookmarksnumbered=true,colorlinks=true,linkcolor=MyBlue,citecolor=MyRed,filecolor=MyBlue,urlcolor=MyGreen]{hyperref}
+\bibliographystyle{econ}
+
+%% Theorem Environment
+\theoremstyle{definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{example}{Example}
+\newtheorem{corollary}[theorem]{Corollary}
+\usepackage{mathtools}
+\usepackage{\CiteMathPackage}
+
+\begin{document}
+
+%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??
+%?? title
+%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??%??
+
+\title{\bf Design-Based Analysis in Difference-In-Differences Settings with Staggered Adoption, Journal of Econometrics, 2022}
+\author{Wenzhi Wang \thanks{This note is written in my pre-doc period at the University of Chicago Booth School of Business.} } 
+\date{\today}
+\maketitle
+
+\citet{atheyDesignBasedAnalysisDifferenceinDifferences2022a}
+
+\section{Introduction}
+
+In this paper we study estimation of and inference for average treatment effects in a setting with panel data. We focus on the setting where units adopt the policy or treatment of interest at a particular point in time, and then remain exposed to this treatment at all times afterwards. The adoption date at which units are first exposted to the policy may, but need not, vary by unit. We refer to this as a \highlightB{staggered adoption design (SAD)}, such designs are sometimes also referred to as event study designs. 
+
+This paper takes a \highlightP{design-based} perspective where the properties of the estimators arises from the stochastic nature of the treatment assignment, rather than a \highlightP{sampling-based} or \highlightP{model-based} perspective where these roperties arise from the random sampling of units from a large population in combination with assumptions on this population distribution. This perspective is particularly attractive in the settings when the sample comprises the entire population, e.g., all states of the US, or all countries of the world so that nondegenerate sampling properties would require postulating an imaginary super-population. 
+
+In this design setting our critical assumptions involve restrictions on the assignment process as well as exclusion restrictions, but in contrast to other work in this area they do not include functional form assumptions. Commonly made common trend assumptions follow from some of our assumptions, but are not the starting point. 
+
+We set up the problem with the adoption date, rather than the actual exposure to the intervention, as the basic treatment indexing the potential outcomes. We consider assumptions under which this discrete multi-valued treatment (the adoption date) can be reduced to a binary one, defined as the indicator whether or not the treatment has already been adopted. We then investigate the properties of the standard DID estimator under assumptions about the assignment of the adoption date and under various exclusion restrictions. We show that under a random adoption date assumption, the standard DID estimator can be interpreted as the weighted average of average causal effects of changes in the adoption date. We also consider design-based inference for this estimand.
+
+\section{Set up}
+
+Using the potential outcome framework for causal inference, we consider a setting with a finite population of $N$ units. Each of these $N$ units are characterized by a set of potential outcomes in $T$ periods for $T+1$ treatment levels, $Y_{it}\of{a}$. Here $i \in \bc{1, \ldots, N}$ indexes the units, $t \in \mathbb{T} = \bc{1, \ldots, T}$ indexes the time periods, and the argument of the potential outcome function $Y_{it}\of{\cdot}$ is the adoption date $a \in \mathbb{A}$, where $\mathbb{A} = \mathbb{T} \bigcup \bc{\infty} = {1, \ldots, T, \infty}$. This argument, $a$, which indexes the discrete treatment, is the date that the binary policy was first adopted by a unit. Units can adopt the policy at any of the time periods $1, \ldots, T$, or not adopt the policy at all during the period of observation, in which case we code the adoption date as $\infty$. Once a unit adopts the treatment, it remains exposed to the treatment for all periods afterwards.
+
+This set up differs from that in most of the DiD literature where the binary indicator whether a unit is exposed to the treatment in the current period indexes the potential outcomes. The notion of focusing on a full treatment path rather than a binary treatment is also related to the dynamic treatment effect literature. We observe for each unit in the population the adoption date $A_i \in \mathbb{A}$ and the sequence of $T$ realized outcomes, $Y_{it}$, for $t \in \mathbb{T}$, where the realized outcome for unit $i$ in period $t$ equals 
+\begin{equation}
+    \label{2_1}
+    Y_{it} = Y_{it}\of{A_i}.
+\end{equation}
+We may also observe pre-treatment characteristics, denoted by the $K$-component vector $X_i$, although for most of the discussion we abstract from their presence. Let $\bds{Y}, \bds{A}$, and $\bds{X}$ denote the $N \times T$, $N \times 1$ and $N \times K$ matrices with typical elements $Y_{it}, A_{i}$, and $X_{itk}$, respectively.
+
+Our design-based analysis views the potential outcomes $Y_{it}\of{a}$ as deterministic, and only the adoption dates $A_i$, as well as functions thereof such as the realized outcomes, as stochastic. Distributions of estimators will be fully determined by the adoption date distribution, with the number of units N and the number of time periods T fixed, unless explicitly stated otherwise.
+
+In many cases the units themselves are clusters of units of a lower level of aggregation. For example, the units may be states, and the outcomes could be averages of outcomes for individuals in that state, possibly of samples drawn from subpopulations from these states. In such cases $N$ and $T$ may be as small as $2$, although in many of the cases we consider $N$ will be at least moderately large. This distinction between cases where $Y_{it}$ is itself an average over basic units or not, affects some, but not all, of the formal statistical analyses. It may make some of the assumptions more plausible, and it may affect the inference, especially if individual level outcomes and covariates are available.
+
+Define $W: \mathbb{A}\times\mathbb{T} \mapsto \bc{0,1}$, with $W\of{a,t} = \ind{a \leq t}$ to be the binary indicator for the adoption date $a$ preceding $t$, and define $W_{it}$ to be the indicator for the policy having been adopted by unit $i$ prior to, or at, time $t$, so that 
+$$
+W_{it} = W\of{A_i, t} = \ind{A_i \leq t}.
+$$
+The $N \times T$ matrix $\bds{W}$ with typical element $W_{it}$ has the form:
+$$
+\boldsymbol{W}_{N \times T}=\left(\begin{array}{ccccccr}
+1 & 2 & 3 & 4 & \ldots & T & \text { (time period) } \\
+& & & & & & \\
+0 & 0 & 0 & 0 & \ldots & 0 & \text { (never adopter) } \\
+0 & 0 & 0 & 0 & \ldots & 1 & \text { (late adopter) } \\
+0 & 0 & 0 & 0 & \ldots & 1 & \\
+0 & 0 & 1 & 1 & \ldots & 1 & \\
+0 & 0 & 1 & 1 & \ldots & 1 & \text { (medium adopter) } \\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \\
+0 & 1 & 1 & 1 & \ldots & 1 & \text { (early adopter) }
+\end{array}\right)
+$$
+Let $N_a = \sum_{i=1}^{N} \ind{A_i = a}$ be the number of units in the sample with adoption date $a$, define $\pi_a = N_a / N$, for $a \in \mathbb{A}$, as the fraction of units with adoption date equal to $a$, and define $\Pi_t = \sum_{s=1}^{t}\pi_s$, for $t \in \mathbb{T}$, as the fraction of units with an adoption date on or prior to $t$. 
+
+Also define $\ol{Y}_t\of{a}$ to be the population average of the potential outcome in period $t$ for adoption date $a$:
+$$
+\ol{Y}_t(a) \equiv \frac{1}{N} \sum_{i=1}^N Y_{i t}(a), \quad \text { for } t \in \mathbb{T}, a \in \mathbb{A}.
+$$
+Define the unit and average causal effects of adoption date $a^\prime$ relative to $a$, on the outcome in period $t$, as 
+$$
+\tau_{i t, a a^{\prime}} \equiv Y_{i t}\left(a^{\prime}\right)-Y_{i t}(a), \quad \tau_{t, a a^{\prime}} \equiv \frac{1}{N} \sum_{i=1}^N\left\{Y_{i t}\left(a^{\prime}\right)-Y_{i t}(a)\right\}=\ol{Y}_t\left(a^{\prime}\right)-\ol{Y}_t(a) .
+$$
+
+The average causal effects $\tau_{t, a a^\prime}$ form components of many of the estimands we consider later. A particularly interesting average effect is 
+\begin{equation}
+    \notag 
+    \tau_{t, \infty 1} = \frac{1}{N} \sum_{i=1}^{N} \bp{Y_{it}\of{1} - Y_{it}\of{\infty}},
+\end{equation}
+the average effect in period $t$ of switching the entire population from never adopting the policy ($a = \infty$), to adopting the policy in the first period ($a = 1$). Formally, there is nothing special about the particular average effect $\tau_{t, \infty 1}$ relative to any other $\tau_{t, a a^\prime}$, but $\tau_{t, \infty 1}$ will be useful as a benchmark. Part of the reason is that for all $t$ and $i$ the comparison $Y_{it}\of{1} - Y_{it}\of{\infty}$ is between potential outcomes for adoption prior to or at time $t$ (namely adoption date $a = 1$) and potential outcomes for adoption later than $t$ (namely, never adopting, $a = \infty$). In contrast, any other average effect $\tau_{t, a a^\prime}$ will for some $t$ involve comparing potential outcomes neither of which correspond to having adopted the treatment yet, or comparing potential outcomes both of which correspond to having adopted the treatment already.
+
+\section{Assumptions}
+
+We consider three sets of assumptions. The first set, containing only a single assumption, is about the \highlightB{design}, that is, the assignment of the treatment, here the adoption date, conditional on the potential outcomes and possibly pretreatment variables. We refer to this as a design assumption because it can be guaranteed by design of the study. The second set of assumption is about the \highlightB{potential outcomes}, and rules out the presence of certain treatment effects. These exclusion restrictions are substantive assumptions, and they cannot be guaranteed by design. The third set of assumptions consists of four \highlightB{auxiliary assumptions}, two about heterogeneity of certain causal effects, one about sampling from a large population, and one about an outcome model in a large population. The nature of these three sets of assumptions, and their plausibility, is very different, and it is in our view useful to carefully distinguish between them.
+
+\subsection{The Design Assumption}
+
+The first assumption is about the assignment process for the adoption date $A_i$. Our starting point is to assume that the adoption date is completely random:
+
+\begin{assumption}[Random Adoption Date] \label{RAD}
+    For some set of positive intergers $N_a$, for $a \in \mathbb{A}$, 
+    $$
+    \P{\bds{A} = \bds{a}} = \bp{\frac{N !}{\Pi_{a \in \mathbb{A}} N_a !}}^{-1},
+    $$
+    for all $N$-vectors $\bds{a}$ such that for all $a \in \mathbb{A}$, $\sum_{i=1}^{N} \ind_{a_i = a} N_a$.
+\end{assumption}
+
+This assumption is obviously very strong. However, without additional assumptions, this assumption has no testable implications in a setting with exchangeable units, as stated formally in the following Lemma.
+
+\begin{lemma}[No Testable Restrictions]
+    Suppose all units are exchangeable. Then Assumption \ref{RAD} has no testable implications for the joint distribution of $\bp{\bds{Y}, \bds{A}}$.    
+\end{lemma}
+
+Hence, if we wish to relax the assumptions, we need to bring in additional information. Such additional information can come in the form of pretreatment variables, that is, variables that are known not to be affected by the treatment. In that case we can relax the assumption by requiring only that the adoption date is completely random within subpopulations with the same values for the pre-treatment variables. Additional information can also come in the form of restrictions on the potential outcomes or the treatment effects. 
+
+Under Assumption \ref{RAD} the marginal distribution of the adoption dates is fixed, and so also the fraction $\pi_a$ is fixed in the repeated sampling thought experiment. This part of the set up is similar in spirit to fixing the number of treated units in the sample in a completely randomized experiment. It is convenient for obtaining finite sample results. \highlightP{Note that it implies that the adoption dates for units $i$ and $j$ are not independent.}
+
+An important role in our analysis is played by what we label the \highlightB{adjusted treatment}, adjusted for unit and time period averages:
+$$
+\dot{W}_{i t} \equiv W_{i t}-\ol{W}_{\cdot t} - \ol{W}_{i \cdot} + \ol{W},
+$$
+where 
+$
+\ol{W}_{\cdot t} \equiv \sum_{i=1}^N W_{i t} / N, \ol{W}_{i \cdot} \equiv \sum_{t=1}^T W_{i t} / T, \text { and } \ol{W} \equiv \sum_{i=1}^N \sum_{t=1}^T W_{i t} /(N T)
+$
+are averages over units, time periods, and both, respectively. We can also write the adjusted treatment indicator as 
+$$\dot{W}_{it} = g\of{t, A_i},$$
+where 
+$$
+g(t, a) \equiv\left(\ind{a \leq t}-\sum_{s \leq t} \pi_s\right)+\frac{1}{T}\left(a \ind{a \leq T}-\sum_{s=1}^T s \pi_s\right)+\frac{T+1}{T}\left(\ind{a=\infty}-\pi_{\infty}\right)
+$$
+where, with some minor abuse of notation, we adopt the convention that $a \ind{a \leq T}$ is zero if $a = \infty$ Under Assumption \ref{RAD}, which fixes the marginal distribution of $A_i$, the sum $\sum_{i,t}\dot{W_{it}}^2$ is non-stochastic, even though the adjusted treatment $\dot{W}_{it}$ and its squares are stochastic. The fact that this sum is non-stochastic enables us to derive exact finite sample results for the standard DID estimator.
+
+\subsection{Exclusion Restrictions}
+
+The next two assumptions concern the potential outcomes. Their formulation does not involve the assignment mechanism, that is, the distribution of the adoption date. In that sense they are unlike the strict and weak exogeneity or no-feedback assumptions. In essence these are exclusion restrictions, assuming that particular causal effects are absent. Collectively these two assumptions imply that we can think of the treatment as a binary one, the only relevant component of the adoption date being whether a unit is exposed to the treatment at the time we measure the outcome. 
+
+The first of the two assumptions, and likely the more plausible of the two in practice, rules out effects of future adoption dates on current outcomes. More precisely, it assumes that if the policy has not been adopted yet, the exact future date of the adoption has no causal effect on potential outcomes for the current period. 
+
+\begin{assumption}[No Anticipation] \label{NA}
+    For all units $i$, all time periods $t$, and for all adoption dates $a$, such that $a > t$,
+    $$Y_{it}\of{a} = Y_{it}\of{\infty}.$$
+    We can also write this assumption as requiring that for all triples $\bp{i,t,a}$, 
+    $$
+    Y_{i t}(a)=\ind{a \leq t} Y_{i t}(a)+\ind{a>t} Y_{i t}(\infty), \quad \text { or } \ind{a>t}\left(Y_{i t}(a)-Y_{i t}(\infty)\right)=0 .
+    $$
+    This last representation shows most clearly how the assumption rules out certain causal effects. Note that this assumption does not involve the adoption date, and so does not restrict the distribution of the adoption dates. Violations of this assumption may arise if the policy is anticipated prior to its implementation.
+\end{assumption}
+
+The next assumption is arguably much stronger. It asserts that for potential outcomes in period $t$ it does not matter how long the unit has been exposed to the treatment, only whether the unit is exposed at time $t$.
+
+\begin{assumption}[Invariance to History] \label{IH}
+    For all units $i$, all time periods $t$, and for all adoption dates $a$, such that $a \leq t$,
+    $$
+    Y_it\of{a} = Y_{it}\of{1}.
+    $$
+    This assumption can also be written as 
+    $$
+    Y_{i t}(a)=\ind{a \leq t} Y_{i t}(1)+\ind{a>t} Y_{i t}(a), \quad \text { or } \ind{a \leq t}\left(Y_{i t}(a)-Y_{i t}(1)\right)=0
+    $$
+    with again the last version of the assumption illustrating the exclusion restriction in this assumption. Again, the assumption does not rule out any correlation between the potential outcomes and the adoption date, only that there is no causal effect of an early adoption versus a later adoption on the outcome in period t, as long as adoption occurred before or on period $t$.
+\end{assumption}
+
+If both the exclusion restrictions, that is, both Assumptions \ref{NA} and \ref{IH} hold, then the potential outcome $Y_{it}\of{a}$ can be indexed by the binary indicator $W\of{a,t} = \ind{a \leq t}$.
+
+\begin{lemma}[Binary Treatment] \label{lemma2}
+    Suppose Assumptions \ref{NA} and \ref{IH} hold. 
+    \begin{enumerate}[topsep=0pt, leftmargin=20pt, itemsep=0pt, label=(\arabic*)]
+        \setlength{\parskip}{10pt} 
+        \item For all units $i$, all time periods $t$, and for all adoption dates $a \geq a^\prime$, 
+        $$
+        Y_{i t}\left(a^{\prime}\right)-Y_{i t}(a)=\ind{a^{\prime} \leq t<a} \times \left(Y_{i t}(1)-Y_{i t}(\infty)\right),
+        $$
+        so that 
+        $$
+        Y_{i t}(a)=Y_{i t}(\infty)+\ind{a \leq t} \times \left(Y_{i t}(1)-Y_{i t}(\infty)\right)= \begin{cases}Y_{i t}(\infty) & \text { if } a \leq t \\ Y_{i t}(1) & \text { otherwise }\end{cases}.
+        $$
+
+        \item For all time periods, $t$, and adoption dates $a > a^\prime$, 
+        $$
+        \tau_{t, a a^{\prime}}=\tau_{t, \infty 1} \ind{a^{\prime} \leq t<a}= \begin{cases}\tau_{t, \infty 1} & \text { if } a^{\prime} \leq t<a, \\ 0 & \text { otherwise. }\end{cases}.
+        $$
+    \end{enumerate}
+\end{lemma}
+If these two assumptions hold, we can therefore simplify the notation for the potential outcomes and focus on the pair of potential outcomes $Y_{it}\of{1}$ and $Y_{it}\of{\infty}$.
+
+Note that these two assumptions are substantive, and because they only involve the potential outcomes and not the adoption date, they cannot be guaranteed by design. This is in contrast tow Assumption \ref{RAD}, which can be guaranteed by randomization of the adoption date. It is also important to note that in many empirical studies Assumptions \ref{NA} and \ref{IH} are made, often implicitly by writing a model for realized outcome $Y_{it}$ that depends solely on the contemporaneous treatment exposure $W_{it}$, and not the actual adoption date $A_i$ or treatment exposure $W_{i t^{\prime}}$ in other periods $t^{\prime}$. In the current discussion we want to be explicit about the fact that this restriction is an assumption, and it does not automatically hold. Note that the assumption does not restrict the time series dependence between the potential outcomes. 
+
+It is trivial to see that without additional information, the exclusion restrictions in Assumptions \ref{NA} and \ref{IH} have no testable implications because they impose restrictions on paris of potential outcomes that can never be observed together. However, in combination with random assignment, the two exclusion restrictions, Assumptions \ref{NA} and \ref{IH}, have testable implications as long as $T \geq 2$ and there is some variation in the adoption date. 
+
+\begin{lemma}[Testable Restrictions from the Exclusion Restrictions]
+\begin{enumerate}[topsep=0pt, leftmargin=20pt, itemsep=0pt, label=(\arabic*)]
+    \setlength{\parskip}{10pt} 
+    \item Assumptions \ref{NA} and \ref{IH} jointly have no testable implications for the joint distribution of $\bp{\bds{Y}, \bds{W}}$.
+    \item Suppose $T \geq 2$ and $\pi_2, \pi_{\infty} > 0$. Then the combination of the random adoption date and the exclusion restrictions, Assumptions \ref{RAD}-\ref{IH}, impose testable restrictions on the joint distribution of $\bp{\bds{Y}, \bds{W}}$.
+\end{enumerate}
+\end{lemma}
+
+This implies that if we maintain, say, the no-anticipation assumption, we can relax the random adoption date assumption. For example, we can allow the probability of adoption at time $t$ to depend on the outcomes prior to period $t$.
+
+\subsection{Auxiliary Assumptions}
+
+In this section we consider four auxiliary assumptions that are convenient for some analyses, and in particular can have implications for the variance of specific estimators, but that are not essential in many cases. These assumptions are often made in empirical analyses without researchers explicitly discussing them 
+
+The first of these assumptions assumes that the effect of adoption date $a^{\prime}$, relative to adoption date $a$, on the outcome in period $t$, is the same for all units.
+
+\begin{assumption}[Constant Treatment Effects over Units] \label{CTEU}
+    For all units $i$, $j$ and for all time periods $t$ and all adoption dates $a$ and $a^{\prime}$,
+    $$
+    Y_{i t}\left(a^{\prime}\right)-Y_{i t}(a)=Y_{j t}\left(a^{\prime}\right)-Y_{j t}(a).
+    $$
+\end{assumption}
+
+The second assumption restricts the heterogeneity of the treatment effects over time. 
+
+\begin{assumption}[Constant Treatment Effect over Time] \label{CTET}
+    For all units $i$ and all time periods $t$ and $t^{\prime}$ 
+    $$
+    Y_{i t}(1)-Y_{i t}(\infty)=Y_{i t^{\prime}}(1)-Y_{i t^{\prime}}(\infty) .
+    $$
+\end{assumption}
+
+We only restrict the time variation for comparisons of the adoption dates $1$ and $\infty$ because we typically use this assumption in combination with Assumptions \ref{NA} and \ref{IH}. In that case we obtain a constant binary treatment effect set up, as summarized in the following Lemma.
+
+\begin{lemma}[Binary Treatment and Constant Treatment Effects]
+    Suppose Assumptions \ref{NA}-\ref{CTET} hold. Then for all $t$ and $a^{\prime} < a$
+    $$
+    Y_{i t}\left(a^{\prime}\right)-Y_{i t}(a)=\ind{a^{\prime} \leq t<a} \times \tau_{1 \infty}.
+    $$
+\end{lemma}
+
+The next assumption allows us to view the potential outcomes by postulating a large population from which the sample is drawn. 
+
+\begin{assumption}[Random Sampling] \label{RS}
+    The sample can be viewed as a random sampling from an infinitely large population, with joint distribution for $\bp{A_i, Y_{it}\of{a}, a \in \mathbb{A}, t \in \mathbb{T}}$ dentoed by $f\of{a, y_1\of{1}, \ldots, y_T\of{\infty}}$.    
+\end{assumption}
+
+Under the random sampling assumption we can put additional structure on average potential outcomes.
+
+\begin{assumption}[Additivity] \label{A}
+    $\E\bs{Y_{it}\of{\infty}} = \a_i + \b_t$.
+\end{assumption}
+
+\section{Difference-in-Differences Estimators: Interpretation and Inference}
+
+In the simplest setting with $N$ units and $T$ time periods, without additional covariates, the realized outcome in period $t$ for unit $i$ is modelled as 
+\begin{equation}
+    \label{4_1}
+    Y_{it} = \a_i + \b_t + \tau W_{it} + \ve_{it} .
+\end{equation}
+In this model there are unit effects $\a_i$ and time effects $\b_t$ , but both are additive with interactions between them ruled out. The effect of the treatment is implicitly assumed to be additive and constant across units and time periods.
+
+We interpret the DiD estimand under the randomized adoption date assumption, leading to a different setting from other econometrics papers. 
+
+\subsection{Difference-in-Differences Estimators}
+
+\bibliography{\CiteReference}
+
+
+\end{document}
